@@ -1,0 +1,6 @@
+# Personal overrides — never commit
+.claude/settings.local.json
+.claude/*.local.json
+
+# Hook working files
+.claude/.state/

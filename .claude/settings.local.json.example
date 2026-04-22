@@ -1,0 +1,30 @@
+{
+  "_comment": [
+    "Copy this to .claude/settings.local.json (gitignored) for personal overrides.",
+    "Local settings merge over project settings, which merge over user settings.",
+    "Good uses: disable a noisy hook while debugging, add extra allow-listed bash",
+    "commands for your own tooling, point to a local MCP server."
+  ],
+
+  "permissions": {
+    "allow": [
+      "Bash(bun:*)",
+      "Bash(deno:*)"
+    ]
+  },
+
+  "hooks": {
+    "Notification": [
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "_comment": "macOS desktop notification when Claude needs your input",
+            "command": "osascript -e 'display notification \"Claude Code needs your attention\" with title \"Claude Code\"'"
+          }
+        ]
+      }
+    ]
+  }
+}
