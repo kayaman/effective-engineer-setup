@@ -45,6 +45,7 @@ as skills, subagents, and hooks.
 │       ├── inject-context.sh       #  Ch.13 Repository awareness on SessionStart
 │       └── brag-log.sh             #  Ch.6  Log accomplishments on Stop
 └── docs/
+    ├── USAGE.md                    # **Day-to-day usage guide — scenarios, recipes, troubleshooting**
     ├── PRINCIPLES.md               # Book → daily workflow mapping (short, high-signal)
     ├── adrs/                       # Architecture Decision Records live here
     │   ├── README.md
@@ -53,6 +54,10 @@ as skills, subagents, and hooks.
     ├── TECH_DEBT.md                # Running technical-debt ledger
     └── BRAG.md                     # Brag document (updated automatically)
 ```
+
+> **New to the template?** Read `docs/USAGE.md` after installing. It's the
+> hands-on guide — a realistic day, indexed scenarios, a skills cheat sheet,
+> hook reference, and troubleshooting.
 
 ---
 
@@ -86,7 +91,8 @@ Then open Claude Code and try:
 ## Why these specific helpers?
 
 Every helper maps to a named chapter, principle, or workflow in the book.
-`docs/PRINCIPLES.md` is the one-page cheat sheet for that mapping.
+`docs/PRINCIPLES.md` is the one-page cheat sheet for that mapping, and
+`docs/USAGE.md` is the day-to-day operator's guide.
 
 Two design rules kept the surface area small:
 
