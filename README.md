@@ -1,7 +1,7 @@
 # Effective Engineer — Claude Code Template
 
 A reusable, opinionated **Claude Code** template that operationalizes the
-principles from *The Effective Software Engineer* (Addy Osmani, O'Reilly, 2026)
+principles from _The Effective Software Engineer_ (Addy Osmani, O'Reilly, 2026)
 as skills, subagents, and hooks.
 
 > **"Efficiency is doing things right; effectiveness is doing the right things."**
@@ -17,6 +17,9 @@ as skills, subagents, and hooks.
 ```
 .
 ├── CLAUDE.md                       # Project memory: principles + guardrails Claude reads every session
+├── bootstrap.sh                    # Drop CLAUDE.md + docs/ scaffolding into a target project
+├── scripts/
+│   └── sync-to-dotfiles.sh         # Mirror skills/agents/hooks into a stow-managed dotfiles package
 ├── .claude/
 │   ├── settings.json               # Shared hooks, permission rules, MCP defaults
 │   ├── settings.local.json.example # Per-developer overrides (copy, don't commit)
@@ -50,7 +53,8 @@ as skills, subagents, and hooks.
     ├── adrs/                       # Architecture Decision Records live here
     │   ├── README.md
     │   ├── 0000-template.md
-    │   └── 0001-record-architectural-decisions.md
+    │   ├── 0001-record-architectural-decisions.md
+    │   └── 0002-stow-dotfiles-split-install.md
     ├── TECH_DEBT.md                # Running technical-debt ledger
     └── BRAG.md                     # Brag document (updated automatically)
 ```
@@ -63,6 +67,37 @@ as skills, subagents, and hooks.
 
 ## Install
 
+Two paths. Pick one.
+
+### Option A — Dotfiles + Stow (recommended for multi-project use)
+
+One-time setup puts skills, agents, and hooks into `~/.claude/` via GNU
+Stow, so every project inherits them without vendoring. Per project, a
+tiny `bootstrap.sh` drops in `CLAUDE.md` and the `docs/` scaffolding.
+
+```bash
+# One-time: sync this repo's user-scope assets into your dotfiles,
+# then stow them into $HOME.
+git clone --depth 1 <this-repo-url> /tmp/ee-template
+/tmp/ee-template/scripts/sync-to-dotfiles.sh ~/Projects/dotfiles
+cd ~/Projects/dotfiles && stow -t "$HOME" claude
+
+# Per project: drop in the per-project scaffolding.
+/tmp/ee-template/bootstrap.sh /path/to/your/project
+```
+
+Why this split: skills, hooks, and agents are identical across every
+project — keeping a single copy under `~/.claude/` avoids drift and keeps
+project repos clean. `CLAUDE.md`, `docs/adrs/`, `docs/TECH_DEBT.md`, and
+`docs/BRAG.md` are inherently per-project and stay committed in each
+repo. See [ADR 0002](docs/adrs/0002-stow-dotfiles-split-install.md) for
+the full rationale.
+
+### Option B — Vendor into the project (classic)
+
+If you want every file committed inside the project (e.g., for
+collaborators who don't use a dotfiles workflow):
+
 ```bash
 # From the root of your project
 git clone --depth 1 <this-repo-url> /tmp/ee-template
@@ -73,6 +108,8 @@ chmod +x .claude/hooks/*.sh
 
 # Restart Claude Code so it picks up the new .claude/ directory
 ```
+
+---
 
 Then open Claude Code and try:
 
@@ -118,7 +155,7 @@ Two design rules kept the surface area small:
 
 ## Reference
 
-- Book: Addy Osmani, *The Effective Software Engineer*, O'Reilly, 2026
+- Book: Addy Osmani, _The Effective Software Engineer_, O'Reilly, 2026
   (ISBN 9798341638167)
 - Claude Code skills: <https://code.claude.com/docs/en/skills>
 - Claude Code hooks: <https://code.claude.com/docs/en/hooks-guide>
